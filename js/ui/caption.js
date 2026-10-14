@@ -1,5 +1,5 @@
 // Captions: during the match, the sentence the narrator is reading appears above the remote,
-// with who is speaking (your voice or the computer voice). Settings → Voice turns them off.
+// with who is speaking (our team). Settings → Voice turns them off.
 import { $, h } from './dom.js';
 import { icon } from './icons.js';
 import { setTip } from './tooltip.js';
@@ -11,10 +11,10 @@ import { G, inMatch } from '../game/state.js';
 let el = null, text = null, who = null, timer = 0;
 
 function show(cur){
-  if (!voice.captions || !inMatch() || G.tour || cur.id === 'text') return;
+  if (!voice.captions || !inMatch() || G.tour) return;
   clearTimeout(timer);
   text.textContent = cur.text;
-  who.textContent = cur.source === 'none' ? 'Narrator' : SOURCE[cur.source].label;
+  who.textContent = SOURCE[cur.source].label;
   el.dataset.src = cur.source;
   el.hidden = false;
   el.classList.remove('out');

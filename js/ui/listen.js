@@ -6,20 +6,18 @@ import { icon } from './icons.js';
 import { setTip } from './tooltip.js';
 import { on } from '../core/events.js';
 import { LINE_BY_ID } from '../data/voice-lines.js';
-import { voice, say, stopVoice, playAll, sourceOf, isSequencePlaying, computerVoiceName } from '../audio/voice.js';
+import { voice, say, stopVoice, playAll, sourceOf, isSequencePlaying } from '../audio/voice.js';
 import { initAudio } from '../audio/audio.js';
 
 export const SOURCE = {
   file: { label: 'Our voice', text: 'Recorded by our team.' },
-  computer: { label: 'Computer voice', text: 'This line has no recording, so the computer reads it.' },
-  none: { label: 'No voice', text: 'This browser has no English computer voice. Open the game in Chrome or Edge.' }
+  none: { label: 'No recording', text: 'The file of this line is missing in assets/voices/.' }
 };
 
 /** Tooltip lines that say which voice will be used. */
 export function sourceState(id){
   const src = sourceOf(id);
-  const name = src === 'computer' && computerVoiceName() ? ` (${computerVoiceName()})` : '';
-  return `${SOURCE[src].label}${name}: ${SOURCE[src].text}`;
+  return `${SOURCE[src].label}: ${SOURCE[src].text}`;
 }
 
 const playingNow = id => !!(voice.current && voice.current.id === id);

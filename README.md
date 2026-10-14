@@ -19,10 +19,10 @@ El juego **lee en voz alta, en inglés, las instrucciones** de las notas: la bie
 
 - **Durante el partido**: la primera vez que usas un botón se lee su frase; cuando rompes una regla se lee la regla; en cada saque se lee una regla al azar. Abajo aparece el **subtítulo** con la frase y quién habla.
 - **Botones de bocina** (🔊) en la guía *How to play*, en el menú (bienvenida) y en la pantalla final: escuchas cualquier frase cuando quieras. **Listen to all** las lee todas seguidas.
-- **Las voces son del equipo**: `assets/voices/` trae las 16 frases (intro, 10 botones, 5 reglas) cortadas de la narración final, y el texto del juego dice exactamente lo mismo que los audios. Si falta un archivo, esa frase la lee la voz de la computadora.
+- **Las voces son del equipo**: `assets/voices/` trae las 16 frases (intro, 10 botones, 5 reglas) cortadas de la narración final, y el texto del juego dice exactamente lo mismo que los audios. No hay voz de computadora: si falta un archivo, esa frase simplemente no suena (el texto sigue en pantalla).
 - **Efectos de sonido**: `assets/sfx/` trae los 10 efectos de los botones.
-- **Ajustes → Voice**: narrador *All / Rules / Off*, la voz de la computadora (con botón *Test*), velocidad, volumen y subtítulos. La música baja sola mientras alguien habla.
-- La voz de la computadora (solo para los consejos del tutorial y el tour) depende del navegador: **Chrome y Edge** tienen buenas voces en inglés.
+- **Ajustes → Voice**: narrador *All / Rules / Off*, volumen de la voz y subtítulos. La música baja sola mientras alguien habla.
+- El tutorial y el tour solo usan nuestras grabaciones; sus instrucciones se leen en pantalla.
 
 ## Mecánicas de Rocket League
 

@@ -8,7 +8,7 @@ import { on, emit } from '../core/events.js';
 import { prefs } from '../core/storage.js';
 import { clamp } from '../core/math.js';
 import { G, inMatch } from '../game/state.js';
-import { sayText, stopVoice, voice } from '../audio/voice.js';
+import { stopVoice } from '../audio/voice.js';
 
 const STEPS = [
   { target: '#scoreboard', title: 'The score',
@@ -70,7 +70,6 @@ function render(){
   next.replaceChildren(i === STEPS.length - 1 ? 'Play!' : 'Next', h('span', { html: icon('play') }));
   root.classList.toggle('no-target', !target());
   place();
-  sayText(`${s.title}. ${s.text}`);
 }
 
 function go(n){
@@ -98,7 +97,7 @@ function endTour(){
   root.hidden = true;
   emit('tour', false);
   prefs.set('tour-done', '1');
-  if (voice.current && voice.current.id === 'text') stopVoice();
+  stopVoice();
   if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
 }
 

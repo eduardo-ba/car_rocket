@@ -14,8 +14,7 @@ import { view, setQuality } from '../engine/renderer.js';
 import { initAudio } from '../audio/audio.js';
 import { bgm, useSongFile, clearSong } from '../audio/music.js';
 import {
-  voice, englishVoices, hasComputerVoice, computerVoiceName, sayText,
-  setNarratorMode, setVoiceRate, setVoiceVolume, setComputerVoice, setCaptions
+  voice, setNarratorMode, setVoiceVolume, setCaptions
 } from '../audio/voice.js';
 
 const DIFFICULTY_TEXT = {
@@ -32,7 +31,6 @@ const NARRATOR_TEXT = {
   rules: 'Reads only the rules: when you break one, and at each kickoff.',
   off: 'The game is quiet. The speaker buttons still work.'
 };
-const TEST_SENTENCE = 'Hello! I am the narrator of Car Rocket.';
 
 const updaters = [];
 let uid = 0, volume = 60, lastSong = null;
@@ -46,7 +44,7 @@ export function initSettings(){
   volume = clamp(Math.round(Number(prefs.get('vol', 60)) || 0), 0, 100);
   bgm.setVolume(volume / 100);
   on('song:changed', info => { lastSong = info; syncAll(); });
-  for (const name of ['voice:settings', 'voice:voices', 'voice:files']) on(name, syncAll);
+  for (const name of ['voice:settings', 'voice:files']) on(name, syncAll);
 }
 
 function setDifficulty(d){
@@ -188,45 +186,11 @@ function voicePanel(prefix){
     tip: {
       title: 'Narrator',
       body: 'A voice reads the instructions of the game in English: the sentences of the 10 buttons and the 5 rules.',
-      note: 'The 16 sentences use the voices our team recorded. The tutorial tips use the computer voice.'
+      note: 'Every sentence is a recording of our team. There is no computer voice.'
     }
   });
 
-  // computer voice: a list of the English voices of this browser + a test button
-  const selId = `${prefix}-cvoice`;
-  const select = h('select', { id: selId, class: 'select' });
-  const test = h('button', { type: 'button', class: 'btn btn-sm', html: icon('play') }, 'Test');
-  const cvDesc = h('p', { class: 'field-desc' });
-  select.addEventListener('change', () => { setComputerVoice(select.value); syncAll(); });
-  test.addEventListener('click', () => { initAudio(); sayText(TEST_SENTENCE, { force: true }); });
-  updaters.push(() => {
-    const list = englishVoices();
-    const sig = list.map(v => v.voiceURI).join('|');
-    if (select.dataset.sig !== sig){
-      select.dataset.sig = sig;
-      select.replaceChildren(
-        h('option', { value: '' }, list.length ? 'Automatic (best English voice)' : 'No English voice'),
-        ...list.map(v => h('option', { value: v.voiceURI }, `${v.name} (${v.lang})`)));
-    }
-    select.value = list.some(v => v.voiceURI === voice.voiceURI) ? voice.voiceURI : '';
-    select.disabled = test.disabled = !list.length;
-    cvDesc.textContent = hasComputerVoice()
-      ? `Now: ${computerVoiceName()}`
-      : 'This browser has no English voice. Use Chrome or Edge.';
-  });
-  const computer = h('div', { class: 'field' },
-    labelWithInfo('label', { for: selId }, 'Computer voice', 'Computer voice', {
-      title: 'Computer voice',
-      body: 'The voice your computer uses to read the tips of the tutorial and the HUD tour.',
-      note: 'Chrome and Edge have the most natural English voices. Press TEST to hear it.'
-    }),
-    h('div', { class: 'select-row' }, select, test),
-    cvDesc,
-    slider({
-      id: `${prefix}-rate`, label: 'Speed', min: 60, max: 140, step: 10,
-      get: () => Math.round(voice.rate * 100), set: v => setVoiceRate(v / 100),
-      tip: { title: 'Speed', body: 'How fast the computer voice speaks. 100% is normal.', note: 'Your own recordings always play at their real speed.' }
-    }),
+  const volumeField = h('div', { class: 'field' },
     slider({
       id: `${prefix}-vvol`, label: 'Voice volume', min: 0, max: 100, step: 5,
       get: () => Math.round(voice.volume * 100), set: v => setVoiceVolume(v / 100),
@@ -237,7 +201,7 @@ function voicePanel(prefix){
     toggle({
       id: `${prefix}-cap`, label: 'Captions', get: () => voice.captions, set: setCaptions,
       tip: { title: 'Captions', body: 'Shows the sentence on the screen while the narrator speaks, so you can read it too.' }
-    })), computer);
+    })), volumeField);
   return root;
 }
 

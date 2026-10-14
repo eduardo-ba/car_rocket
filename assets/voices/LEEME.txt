@@ -14,4 +14,4 @@ Sirve mp3, m4a, wav, ogg o webm. Para cambiar una frase, reemplaza su
 archivo con el mismo nombre. El texto que muestra el juego esta en
 js/data/buttons.js, js/data/rules.js y js/data/voice-lines.js.
 
-Si una frase no tiene grabacion, la lee la voz de la computadora.
+Si una frase no tiene grabacion, no suena (no hay voz de computadora).

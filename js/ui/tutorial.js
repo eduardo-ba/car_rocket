@@ -1,7 +1,7 @@
 // Tutorial: a practice match (no clock, the orange car stays away) that teaches the 10 buttons
 // and the 5 rules one lesson at a time. Each lesson says what to do, lights up the button to press
-// on the remote, and checks that you did it. The narrator reads the sentence of the button or the
-// rule (your own recording when you have one) and then the instruction.
+// on the remote, and checks that you did it. The narrator plays our team's recording of the button
+// or the rule; the instruction itself is only on screen (there is no computer voice).
 // A rule lesson can also be "learned the hard way": breaking the rule shows its penalty and counts.
 import { $, h } from './dom.js';
 import { icon } from './icons.js';
@@ -134,7 +134,6 @@ function speak(){
   const items = [];
   if (lesson.button) items.push(lineForButton(lesson.button).id);
   if (lesson.rule) items.push(lineForRule(lesson.rule).id);
-  items.push({ text: lesson.title === 'Drive' || lesson.final || n === 0 ? `${lesson.title}. ${lesson.text}` : lesson.text });
   narrate(items);
 }
 
@@ -164,6 +163,7 @@ function draw(){
   const quote = $('tutQuote');
   quote.hidden = !b && !r;
   quote.textContent = b ? `"${b.desc}"` : r ? `"${r.text}"` : '';
+  $('tutListen').hidden = !b && !r;   // only lessons with a team recording have something to hear
   $('tutText').textContent = lesson.text;
   $('tutKeys').replaceChildren(...(lesson.keys || []).map(k => h('kbd', {}, k)));
   $('tutKeys').hidden = !lesson.keys;
