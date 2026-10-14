@@ -1,0 +1,12 @@
+EFECTOS DE SONIDO DE LOS BOTONES
+================================
+
+Aqui van los efectos de sonido del equipo, uno por boton:
+
+    jump  turbo  goal  sub  radio  robot  fourbyfour  plane  madmax  tuning
+
+(en formato mp3, por ejemplo jump.mp3). Suenan cuando el boton funciona:
+JUMP al saltar, TURBO al encenderlo, GOAL en el tiro, RADIO al encenderla
+y cada transformacion al activarla.
+
+Si falta un archivo, ese boton usa el sonido que genera el juego.

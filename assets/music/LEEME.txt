@@ -1,0 +1,13 @@
+CANCION DE FONDO
+================
+
+Copia aqui tu cancion con este nombre exacto:
+
+    cancion.mp3
+
+Cuando abras el juego con JUGAR.bat, la cancion se carga sola y suena
+en el menu y durante el partido.
+
+Otra opcion: en el menu del juego, en "Background Music", usa el boton
+CHOOSE SONG y elige cualquier MP3 de tu computadora. Esa cancion se guarda
+en el navegador y tiene prioridad sobre cancion.mp3.

@@ -1,0 +1,140 @@
+/* Reusable components: buttons, icon buttons, cards, form fields, segmented controls,
+   slider, tabs, tooltip, loader and the confirm box. */
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);min-height:var(--touch);padding:0 var(--s4);border-radius:var(--r-md);border:1px solid var(--line-strong);background:var(--surface-2);color:var(--text);font-weight:700;font-size:var(--fs-sm);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;cursor:pointer;transition:background var(--fast),border-color var(--fast),color var(--fast),transform var(--fast),box-shadow var(--fast)}
+.btn:hover{background:var(--surface-3);border-color:var(--text)}
+.btn:active{transform:translateY(1px)}
+.btn kbd{font-size:.7em}
+.btn-primary{background:var(--orange);border-color:transparent;color:var(--on-accent);font-family:var(--display);font-weight:400;letter-spacing:.04em;box-shadow:0 5px 0 var(--orange-deep),0 0 32px rgba(255,138,31,.35)}
+.btn-primary:hover{background:var(--orange-hover);border-color:transparent}
+.btn-primary:active{transform:translateY(3px);box-shadow:0 2px 0 var(--orange-deep)}
+.btn-primary kbd{background:rgba(0,0,0,.16);border-color:rgba(0,0,0,.25);box-shadow:none;color:var(--on-accent);font-family:var(--ui)}
+.btn-ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.btn-ghost:hover{background:var(--surface-2);border-color:var(--line);color:var(--text)}
+.btn-danger{background:transparent;border-color:rgba(255,59,79,.5);color:var(--rule-soft)}
+.btn-danger:hover{background:rgba(255,59,79,.14);border-color:var(--rule);color:#fff}
+.btn-sm{min-height:36px;padding:0 var(--s3);font-size:var(--fs-xs)}
+.btn-lg{min-height:52px;padding:0 var(--s5);font-size:var(--fs-xl)}
+.btn-xl{min-height:68px;padding:0 var(--s6);border-radius:var(--r-lg);font-size:32px}
+.btn-block{width:100%}
+.btn-row{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.btn-row > .btn{flex:1 1 auto}
+
+/* square buttons with an icon (HUD) */
+.icon-btn{display:grid;place-items:center;width:var(--touch);height:var(--touch);border-radius:var(--r-md);border:1px solid var(--line);background:var(--panel);color:var(--text);cursor:pointer;transition:border-color var(--fast),color var(--fast),background var(--fast)}
+.icon-btn .ico{width:22px;height:22px}
+.icon-btn:hover{border-color:var(--text);background:var(--surface-2)}
+.icon-btn[aria-pressed="true"]{border-color:var(--ok);color:var(--ok)}
+.icon-btn[aria-pressed="false"]{color:var(--muted)}
+
+/* ---------- cards ---------- */
+.card{min-width:0;padding:var(--s4) var(--s5);border-radius:var(--r-lg);background:var(--panel);border:1px solid var(--line)}
+.card-title{margin-bottom:var(--s3);font-family:var(--display);font-weight:400;font-size:var(--fs-xl);letter-spacing:.02em}
+
+/* ---------- form fields ---------- */
+.field{min-width:0;margin:0;padding:0;border:0;display:grid;gap:var(--s2)}
+.field-label{padding:0;margin-bottom:var(--s2);font-size:var(--fs-xs);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.field-desc{min-height:1.4em;font-size:var(--fs-sm);line-height:1.4;color:var(--muted)}
+
+/* segmented control = real radio buttons styled as one group */
+.seg{position:relative;display:inline-flex;justify-self:start;gap:4px;padding:4px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line)}
+.seg-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.seg-option{display:inline-flex;align-items:center;min-height:36px;padding:0 var(--s4);border-radius:7px;font-weight:700;font-size:var(--fs-sm);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:background var(--fast),color var(--fast)}
+.seg-option:hover{color:var(--text)}
+.seg-input:checked + .seg-option{background:var(--blue);color:var(--text)}
+.seg-input:focus-visible + .seg-option{outline:2px solid var(--gold);outline-offset:2px}
+
+.slider-row{display:flex;align-items:center;gap:var(--s3)}
+.slider{flex:1;min-width:120px;height:28px;accent-color:var(--orange);cursor:pointer}
+.slider-value{min-width:4.5ch;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+
+.song{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s3)}
+.song-info{display:grid;gap:2px;min-width:0;flex:1 1 220px}
+.song-now{font-size:var(--fs-2xs);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ok)}
+.song-name{font-size:var(--fs-lg);overflow-wrap:anywhere}
+.song-actions{display:flex;flex-wrap:wrap;gap:var(--s2)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;flex-direction:column;min-height:0}
+.tablist{display:flex;gap:var(--s1);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tab{min-height:var(--touch);margin-bottom:-1px;padding:0 var(--s3);border:0;border-bottom:2px solid transparent;background:none;font-weight:700;font-size:var(--fs-sm);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;color:var(--muted);cursor:pointer}
+.tab:hover{color:var(--text)}
+.tab[aria-selected="true"]{color:var(--text);border-bottom-color:var(--orange)}
+.tab:focus-visible{outline-offset:-3px}
+.tabpanels{min-height:0}
+.tabpanel{padding-top:var(--s4)}
+.tabpanel:focus-visible{outline-offset:4px}
+
+/* ---------- tooltip ---------- */
+.tooltip{position:fixed;left:0;top:0;z-index:var(--z-tip);max-width:min(300px,calc(100vw - 16px));padding:var(--s2) var(--s3);border-radius:var(--r-md);background:#0b1728;border:1px solid var(--line-strong);box-shadow:var(--shadow);font-size:var(--fs-sm);line-height:1.4;color:var(--text);pointer-events:none;opacity:0;visibility:hidden;transition:opacity var(--fast),visibility 0s linear var(--fast)}
+.tooltip.is-visible{opacity:1;visibility:visible;transition:opacity var(--fast)}
+.tooltip::after{content:"";position:absolute;left:var(--arrow-x,50%);width:10px;height:10px;background:inherit;border:inherit;transform:translateX(-50%) rotate(45deg)}
+.tooltip[data-side="top"]::after{bottom:-6px;border-top:0;border-left:0}
+.tooltip[data-side="bottom"]::after{top:-6px;border-bottom:0;border-right:0}
+.tooltip > *{margin-top:6px}
+.tooltip > :first-child{margin-top:0}
+.tip-head{display:flex;align-items:center;justify-content:space-between;gap:var(--s3)}
+.tip-head strong{letter-spacing:.08em}
+.tip-keys{display:flex;gap:4px}
+.tip-rule{color:var(--rule-soft);font-weight:600}
+.tip-warn{color:var(--gold);font-weight:700}
+.tip-state{padding-top:6px;border-top:1px solid var(--line);color:var(--muted)}
+
+/* ---------- loader ---------- */
+.loading{position:absolute;inset:0;z-index:var(--z-loading);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s4);background:var(--night);color:var(--muted);letter-spacing:.08em}
+.loader{width:44px;height:44px;border-radius:50%;border:4px solid var(--surface-3);border-top-color:var(--orange);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- confirm box ---------- */
+.confirm{position:absolute;inset:0;z-index:var(--z-confirm);display:grid;place-items:center;padding-inline:var(--s4);background:var(--scrim)}
+.confirm-card{width:min(420px,100%);display:grid;gap:var(--s3);background:var(--surface);box-shadow:var(--shadow)}
+.confirm-card .card-title{margin:0}
+.confirm-card p{color:var(--muted)}
+
+/* tooltip: a sentence from the notes, and a smaller "how it works" line */
+.tip-quote{padding-left:8px;border-left:2px solid var(--voice);font-style:italic;color:#fff}
+.tip-note{font-size:var(--fs-xs);color:var(--muted)}
+
+/* ---------- "i" buttons that explain a setting ---------- */
+.field-label-info{display:inline-flex;align-items:center;gap:6px}
+.info-btn{display:inline-grid;place-items:center;width:22px;height:22px;padding:0;margin:-4px 0;border-radius:50%;border:0;background:none;color:var(--muted);cursor:help;transition:color var(--fast),background var(--fast)}
+.info-btn .ico{width:16px;height:16px}
+.info-btn:hover,.info-btn:focus-visible{color:var(--text);background:var(--surface-3)}
+
+/* ---------- speaker buttons (listen to a line) ---------- */
+.listen-btn{display:inline-grid;place-items:center;flex:none;width:36px;height:36px;padding:0;border-radius:50%;border:1px solid rgba(185,155,255,.4);background:var(--voice-soft);color:var(--voice);cursor:pointer;transition:background var(--fast),border-color var(--fast),color var(--fast),transform var(--fast)}
+.listen-btn .ico{width:18px;height:18px}
+.listen-btn:hover{border-color:var(--voice);background:rgba(185,155,255,.28);color:#fff}
+.listen-btn:active{transform:scale(.94)}
+.listen-btn.is-playing{border-color:var(--voice);background:var(--voice);color:var(--night);animation:speaking 1.1s ease-in-out infinite}
+.listen-sm{width:30px;height:30px}
+.listen-sm .ico{width:15px;height:15px}
+@keyframes speaking{50%{box-shadow:0 0 0 6px rgba(185,155,255,.18)}}
+
+.btn-listen-all .ico{width:14px;height:14px}
+.btn-listen-all.is-playing{border-color:var(--voice);background:var(--voice);color:var(--night)}
+.lab-icon{display:flex}
+
+.icon-btn:disabled{opacity:.35;cursor:not-allowed}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ---------- select ---------- */
+.select-row{display:flex;gap:var(--s2);align-items:center}
+.select{flex:1;min-width:0;min-height:36px;padding:0 var(--s3);border-radius:var(--r-sm);border:1px solid var(--line-strong);background:var(--surface);font-size:var(--fs-sm);cursor:pointer}
+.select:disabled{opacity:.5;cursor:not-allowed}
+
+/* ---------- on/off switch (a real checkbox) ---------- */
+.switch-row{display:flex;align-items:center;gap:6px;min-height:36px}
+.switch-input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.switch{display:inline-flex;align-items:center;gap:var(--s2);font-size:var(--fs-xs);font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);cursor:pointer}
+.switch-track{position:relative;width:40px;height:22px;border-radius:var(--r-pill);background:var(--surface-3);border:1px solid var(--line-strong);transition:background var(--fast)}
+.switch-track::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:transform var(--fast) var(--ease),background var(--fast)}
+.switch-input:checked + .switch .switch-track{background:var(--blue);border-color:transparent}
+.switch-input:checked + .switch .switch-track::after{transform:translateX(18px);background:#fff}
+.switch-input:focus-visible + .switch .switch-track{outline:2px solid var(--gold);outline-offset:2px}
+
+/* ---------- progress bar ---------- */
+.prog{--p:0;position:relative;flex:1 1 220px;min-height:36px;display:flex;align-items:center;padding:0 var(--s3);border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);overflow:hidden}
+.prog-bar{position:absolute;inset:0;transform-origin:left;transform:scaleX(var(--p));background:linear-gradient(90deg,rgba(185,155,255,.35),rgba(62,224,143,.35));transition:transform var(--med) var(--ease)}
+.prog-text{position:relative;font-size:var(--fs-sm);font-weight:700;letter-spacing:.04em}

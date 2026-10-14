@@ -1,0 +1,23 @@
+/* Reset and global basics. */
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0;background:var(--night);color:var(--text);font-family:var(--ui);font-size:var(--fs-md);line-height:1.4;overflow:hidden;-webkit-font-smoothing:antialiased}
+#app{position:fixed;inset:0;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none;background:var(--night)}
+#app > canvas{display:block;width:100%;height:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+p,h1,h2,h3{margin:0}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+.visually-hidden{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+kbd{display:inline-block;min-width:1.8em;padding:0 .45em;border-radius:5px;background:var(--surface-3);border:1px solid var(--line-strong);box-shadow:inset 0 -1px 0 rgba(0,0,0,.45);font-family:var(--ui);font-weight:700;font-size:.78em;line-height:1.6;text-align:center;white-space:nowrap;color:var(--text)}
+.ico{width:1.2em;height:1.2em;flex:none}
+
+/* error and notice screens */
+.err{position:absolute;inset:0;z-index:var(--z-loading);display:flex;align-items:center;justify-content:center;padding-inline:var(--s4);background:var(--night);text-align:center;font-size:var(--fs-lg);line-height:1.5}
+.err .notice{max-width:520px;text-align:left;display:grid;gap:var(--s3)}
+.err code{background:var(--surface-3);border-radius:4px;padding:1px 5px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}

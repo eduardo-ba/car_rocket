@@ -1,0 +1,74 @@
+/* Design tokens: every color, font, size, radius, shadow, layer and timing comes from here.
+   The game is deliberately single-theme: a night match under floodlights. */
+:root{
+  color-scheme:dark;
+
+  /* surfaces */
+  --night:#07101c;
+  --surface:#0d192b;
+  --surface-2:#13233a;
+  --surface-3:#1b2b44;
+  --panel:rgba(8,16,29,.86);
+  --scrim:rgba(3,7,13,.66);
+  --line:rgba(160,196,240,.16);
+  --line-strong:rgba(160,196,240,.34);
+
+  /* text */
+  --text:#eef4fb;
+  --muted:#93a9c4;
+  --on-accent:#1a0d00;
+
+  /* teams and meaning */
+  --blue:#2f8cff;
+  --orange:#ff8a1f;
+  --orange-hover:#ff9d42;
+  --orange-deep:#a34f05;
+  --rule:#ff3b4f;
+  --rule-soft:#ffb3bc;
+  --ok:#3ee08f;
+  --gold:#ffd23f;
+  --voice:#b99bff;          /* everything about the narrator and your recordings */
+  --voice-soft:rgba(185,155,255,.16);
+
+  /* type */
+  --display:"Bungee","Arial Black",Impact,system-ui,sans-serif;
+  --ui:"Chakra Petch","Segoe UI",Roboto,system-ui,sans-serif;
+  --fs-2xs:10px;
+  --fs-xs:11px;
+  --fs-sm:13px;
+  --fs-md:15px;
+  --fs-lg:17px;
+  --fs-xl:20px;
+
+  /* spacing */
+  --s1:4px;
+  --s2:8px;
+  --s3:12px;
+  --s4:16px;
+  --s5:24px;
+  --s6:32px;
+
+  /* shape and depth */
+  --r-sm:6px;
+  --r-md:10px;
+  --r-lg:14px;
+  --r-pill:999px;
+  --shadow:0 12px 32px rgba(0,0,0,.45);
+  --touch:44px;            /* minimum size of anything you click or tap */
+
+  /* motion */
+  --fast:.12s;
+  --med:.22s;
+  --ease:cubic-bezier(.2,.8,.2,1);
+
+  /* layers */
+  --z-hud:10;
+  --z-screen:20;
+  --z-confirm:30;
+  --z-tip:40;
+  --z-loading:50;
+
+  /* measured by js/ui/hud.js so panels never overlap the top bar or the remote */
+  --hud-top-h:56px;
+  --remote-h:84px;
+}

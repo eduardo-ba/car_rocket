@@ -1,0 +1,210 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Car Rocket</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Chakra+Petch:wght@500;600;700&display=swap">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.170.0/+esm">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/hud.css">
+<link rel="stylesheet" href="css/screens.css">
+
+<div id="app">
+  <!-- ===== Loading (hidden by js/main.js when the game is ready) ===== -->
+  <div id="loading" class="loading" role="status" aria-live="polite">
+    <div class="loader" aria-hidden="true"></div>
+    <p>Loading the stadium&hellip;</p>
+  </div>
+
+  <!-- ===== In-game HUD ===== -->
+  <div id="hud" class="hud" hidden>
+    <div id="hudTop" class="hud-top">
+      <div id="status" class="status">
+        <div id="modeChip" class="chip chip-mode" data-tip-side="bottom"><span class="chip-label">Mode</span><span id="modeName" class="chip-value">RC CAR</span></div>
+        <div id="rulesChip" class="chip chip-rules"><span class="chip-label">Rules</span><ol id="rulePips" class="pips" aria-label="Rules you broke"></ol></div>
+        <div id="songChip" class="chip chip-song" data-tip-side="bottom"><span class="chip-label">Music</span><span id="songChipName" class="chip-value">Stadium beat</span></div>
+      </div>
+      <div id="scoreboard" class="scoreboard" role="group" aria-label="Score">
+        <div class="team blue"><span class="team-name">BLUE</span><span id="sBlue" class="num">0</span></div>
+        <div id="clock" class="clock">3:00</div>
+        <div class="team orange"><span id="sOrange" class="num">0</span><span class="team-name">ORANGE</span></div>
+      </div>
+      <div id="hudActions" class="hud-actions" role="toolbar" aria-label="Game options"></div>
+    </div>
+
+    <div id="ballArrow" class="ball-arrow" hidden aria-hidden="true">
+      <svg class="arw" viewBox="0 0 40 40"><path d="M6 20h24M21 11l10 9-10 9" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>BALL</span>
+    </div>
+    <div id="toasts" class="toasts" aria-live="polite"></div>
+    <div id="banner" class="banner" aria-hidden="true"><div id="bannerMain" class="banner-main"></div><div id="bannerSub" class="banner-sub"></div></div>
+    <div id="ruleCard" class="rulecard" role="alert" hidden>
+      <div class="rulecard-head"><span id="rcIcon"></span><span>RULE <span id="rcNum">1</span> BROKEN!</span></div>
+      <p id="rcText" class="rulecard-text"></p>
+      <p id="rcPenalty" class="rulecard-penalty"></p>
+      <p class="rulecard-hint">Press <kbd>H</kbd> to see all the rules.</p>
+    </div>
+    <div id="penalty" class="penalty" role="status" hidden></div>
+    <section id="tutorial" class="tut" aria-labelledby="tutTitle" aria-live="polite" hidden>
+      <div class="tut-top">
+        <span class="eyebrow">Tutorial</span>
+        <span id="tutCount" class="tut-count"></span>
+        <button type="button" id="tutExit" class="btn btn-ghost btn-sm tut-exit">Skip tutorial</button>
+      </div>
+      <div id="tutBar" class="tut-bar" aria-hidden="true"></div>
+      <div class="tut-head">
+        <span id="tutTag" class="tut-tag" hidden></span>
+        <h2 id="tutTitle" class="tut-title"></h2>
+        <button type="button" id="tutListen" class="listen-btn listen-sm" aria-label="Listen again"></button>
+      </div>
+      <p id="tutQuote" class="tut-quote" hidden></p>
+      <p id="tutText" class="tut-text"></p>
+      <p id="tutKeys" class="tut-keys" hidden></p>
+      <ul id="tutTasks" class="tut-tasks" hidden></ul>
+      <p id="tutFeedback" class="tut-feedback" hidden></p>
+      <div class="tut-btns">
+        <button type="button" id="tutBack" class="btn btn-sm">Back</button>
+        <span class="tut-gap"></span>
+        <button type="button" id="tutMenu" class="btn btn-sm" hidden>Menu</button>
+        <button type="button" id="tutPlay" class="btn btn-sm btn-next" hidden>Play a match</button>
+        <button type="button" id="tutNext" class="btn btn-sm btn-next">Next</button>
+      </div>
+    </section>
+    <div id="caption" class="caption" aria-live="polite" hidden></div>
+    <div id="movePop" class="move-pop" aria-hidden="true"></div>
+    <div id="boost" class="boost" data-tip-side="top"><div id="boostRing" class="ring"><span id="boostNum">33</span><small id="boostLabel">BOOST</small></div></div>
+    <div id="remote" class="remote" role="toolbar" aria-label="RC remote control: the 10 buttons">
+      <div class="remote-group" data-group="action">
+        <span id="remoteActionsLabel" class="remote-label">Actions</span>
+        <div id="remoteActions" class="remote-keys" role="group" aria-labelledby="remoteActionsLabel"></div>
+      </div>
+      <div class="remote-group" data-group="transform">
+        <span id="remoteTransformsLabel" class="remote-label">Transform</span>
+        <div id="remoteTransforms" class="remote-keys" role="group" aria-labelledby="remoteTransformsLabel"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Touch controls (phones and tablets) ===== -->
+  <div id="touch" class="touch" hidden>
+    <div class="tpad"><button type="button" data-k="left" aria-label="Steer left">&#9664;</button><button type="button" data-k="right" aria-label="Steer right">&#9654;</button><button type="button" data-k="slide" class="tpad-slide" aria-label="Powerslide">DRIFT</button></div>
+    <div class="tpad"><button type="button" data-k="down" aria-label="Brake and reverse">REV</button><button type="button" data-k="up" aria-label="Accelerate">GAS</button></div>
+  </div>
+
+  <!-- ===== Start screen: the first click turns the sound on (browsers block it until then) ===== -->
+  <section id="start" class="screen start-screen" role="dialog" aria-modal="true" aria-labelledby="startTitle" hidden>
+    <div class="start-inner">
+      <p class="eyebrow">3D RC car football &middot; English project</p>
+      <h1 id="startTitle" class="title start-title"><span class="t-blue">CAR</span> <span class="t-orange">ROCKET</span></h1>
+      <button type="button" id="startBtn" class="btn btn-primary btn-xl btn-play">START</button>
+      <p class="start-hint">Click anywhere or press any key &middot; turn your sound on</p>
+    </div>
+  </section>
+
+  <!-- ===== Main menu ===== -->
+  <section id="menu" class="screen" role="dialog" aria-modal="true" aria-labelledby="menuTitle" hidden>
+    <div class="screen-inner menu-layout">
+      <div class="menu-hero">
+        <header class="hero-text">
+          <p class="eyebrow">3D RC car football &middot; English project</p>
+          <h1 id="menuTitle" class="title"><span class="t-blue">CAR</span> <span class="t-orange">ROCKET</span></h1>
+          <p class="lede"><span id="introListen"></span>Welcome to Car Rocket! You are a mechanic, and your objective is to make the perfect car. You need to score to be the most sigma person in the world. You are ready to become the most sigma. Let&rsquo;s go!</p>
+        </header>
+        <div class="cta">
+          <button type="button" id="playBtn" class="btn btn-primary btn-xl btn-play">PLAY</button>
+          <ol class="play-steps" aria-label="What happens when you press PLAY">
+            <li><b>Tutorial</b><span>Learn the 10 buttons and the 5 rules</span></li>
+            <li><b>Match</b><span>3 minutes against the orange car</span></li>
+            <li><b>Report</b><span>See which rules you followed</span></li>
+          </ol>
+          <p class="cta-hint">or press <kbd>Enter</kbd> &middot; you can skip the tutorial at any moment</p>
+        </div>
+        <section id="menuSettings" class="card" aria-labelledby="menuSettingsTitle">
+          <h2 id="menuSettingsTitle" class="card-title">Settings</h2>
+        </section>
+      </div>
+      <section id="menuGuide" class="card guide" aria-labelledby="menuGuideTitle">
+        <h2 id="menuGuideTitle" class="card-title">How to play</h2>
+      </section>
+    </div>
+  </section>
+
+  <!-- ===== Pause ===== -->
+  <section id="pause" class="screen" role="dialog" aria-modal="true" aria-labelledby="pauseTitle" hidden>
+    <div class="screen-inner pause-layout">
+      <div class="card pause-main">
+        <h1 id="pauseTitle" class="title title-sm">PAUSED</h1>
+        <p id="pauseSummary" class="pause-summary"></p>
+        <button type="button" id="resumeBtn" class="btn btn-primary btn-lg btn-block">RESUME <kbd>Esc</kbd></button>
+        <div class="btn-row">
+          <button type="button" id="tourBtn" class="btn">HUD tour</button>
+        </div>
+        <div class="btn-row">
+          <button type="button" id="restartBtn" class="btn">Restart match</button>
+          <button type="button" id="quitBtn" class="btn btn-danger">Quit to menu</button>
+        </div>
+        <section id="pauseSettings" class="pause-settings" aria-labelledby="pauseSettingsTitle">
+          <h2 id="pauseSettingsTitle" class="card-title">Settings</h2>
+        </section>
+      </div>
+      <section id="pauseGuide" class="card guide" aria-labelledby="pauseGuideTitle">
+        <h2 id="pauseGuideTitle" class="card-title">Help</h2>
+      </section>
+    </div>
+  </section>
+
+  <!-- ===== End of the match ===== -->
+  <section id="end" class="screen" role="dialog" aria-modal="true" aria-labelledby="endTitle" hidden>
+    <div class="screen-inner end-layout">
+      <div class="card end-card">
+        <p id="endEyebrow" class="eyebrow">Full time</p>
+        <h1 id="endTitle" class="title title-sm">YOU WIN!</h1>
+        <p class="endscore" aria-label="Final score"><span id="endB" class="b">0</span><span class="dash">&ndash;</span><span id="endO" class="o">0</span></p>
+        <p id="endVerdict" class="end-verdict"></p>
+        <h2 class="card-title">Rules report</h2>
+        <ol id="endRules" class="report"></ol>
+        <div class="btn-row">
+          <button type="button" id="againBtn" class="btn btn-primary btn-lg">PLAY AGAIN</button>
+          <button type="button" id="endMenuBtn" class="btn">Menu</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Confirm box (restart / quit / delete) ===== -->
+  <div id="confirm" class="confirm" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmText" hidden>
+    <div class="card confirm-card">
+      <h2 id="confirmTitle" class="card-title"></h2>
+      <p id="confirmText"></p>
+      <div class="btn-row">
+        <button type="button" id="confirmNo" class="btn"></button>
+        <button type="button" id="confirmYes" class="btn btn-danger"></button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tooltip" class="tooltip" role="tooltip"></div>
+
+  <!-- ===== Error messages ===== -->
+  <div id="loadError" class="err" hidden>
+    <p>The 3D engine could not load.<br>Connect to the internet and reload the page.</p>
+  </div>
+  <div id="fileNotice" class="err" hidden>
+    <div class="card notice">
+      <h2 class="card-title">Open the game with JUGAR.bat</h2>
+      <p>The game is split into many files, and browsers do not run it from a double-clicked <code>index.html</code>.</p>
+      <p>Go to the game folder and double-click <b>JUGAR.bat</b>. It opens the game in your browser.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // A double-clicked file (file://) cannot load JavaScript modules, so explain how to open the game.
+  if (location.protocol === 'file:') {
+    document.getElementById('loading').hidden = true;
+    document.getElementById('fileNotice').hidden = false;
+  }
+</script>
+<script type="module" src="js/boot.js"></script>
