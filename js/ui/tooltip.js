@@ -1,6 +1,7 @@
 // One tooltip for the whole game.
 //   Static:  <div data-tip="Text" data-tip-title="Title" data-keys="C M" data-tip-side="bottom">
 //   Live:    setTip(el, () => ({title, keys, body, quote, note, rules, warn, state}))  (refreshes while open)
+//   Fixed:   setTip(el, {title, body...})
 //            quote: a sentence from the project notes · note: a smaller "how it works" line
 // It opens after a short hover, right away on keyboard focus, never on touch, and closes with
 // Esc, scrolling or clicking elsewhere. The element points to it with aria-describedby.
@@ -34,7 +35,7 @@ export function infoButton(name, content){
 
 function readContent(el){
   const provider = providers.get(el);
-  let c = provider ? provider() : {
+  let c = provider ? (typeof provider === 'function' ? provider() : provider) : {
     title: el.dataset.tipTitle,
     body: el.dataset.tip,
     keys: el.dataset.keys ? el.dataset.keys.split(' ') : null
