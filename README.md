@@ -183,3 +183,8 @@ JUEGO_INGLES/
 - Bordes suaves con **FXAA**. Todo lo anterior solo en **GRAPHICS: HIGH**; LOW dibuja directo sin bloom ni sombras.
 - Dónde ajustar: intensidades y bloom en `js/engine/renderer.js`; focos de las torres y luces de portería en `js/world/stadium.js`.
 - El público (miles de personas y asientos) son 3 mallas con *instancing*; el cielo con estrellas, luna y nubes es un solo shader, y la ciudad de fondo es una sola malla. Todas las texturas se dibujan con código: no hay imágenes que descargar.
+
+
+## Contribuir y organizar commits
+
+Consulta [CONTRIBUTING.md](CONTRIBUTING.md) para crear ramas, escribir commits y verificar los cambios antes de abrir un pull request.
