@@ -1,0 +1,11 @@
+# Archivos locales del sistema y del editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Variables de entorno locales
+.env
+.env.*
+!.env.example
